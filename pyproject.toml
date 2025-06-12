@@ -12,6 +12,7 @@ dependencies = [
     "click",
     "rich",
     "pyyaml",
+    "textual",
 ]
 authors = [
     {name = "Ernesto Vargas"}

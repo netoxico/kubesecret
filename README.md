@@ -29,6 +29,8 @@ kubesecret my-secret --export -o clean-secret.yaml
 - 📊 Rich table output with syntax highlighting  
 - 🔍 Base64 decoding of secret values
 - ⚡ Simple command-line interface
+- 🎯 **Interactive mode**: Browse and select secrets with arrow key navigation
+- 📋 Visual secret browser with professional terminal UI
 
 ## Prerequisites
 
@@ -54,6 +56,7 @@ uv tool install -e .
 
 ## Usage
 
+### Direct Secret Access
 ```bash
 # View secret data in a formatted table
 kubesecret <secret-name>
@@ -65,8 +68,24 @@ kubesecret <secret-name> --export
 kubesecret <secret-name> --export --output secret.yaml
 ```
 
+### Interactive Mode
+```bash
+# Launch interactive secret browser (no secret name required)
+kubesecret
+
+# Interactive mode with export option
+kubesecret --export
+```
+
+When you run `kubesecret` without a secret name, it enters **interactive mode** with a beautiful terminal interface where you can:
+- 🎯 Browse all available secrets in your current namespace
+- ⌨️ Navigate with arrow keys (↑/↓)
+- ⏎ Select secrets with Enter
+- 🚪 Exit with 'q' or Ctrl+C
+
 ### Examples
 
+#### Direct Access
 ```bash
 # View a secret named 'my-app-secrets'
 kubesecret my-app-secrets
@@ -76,10 +95,19 @@ kubesecret my-app-secrets --export
 
 # Export secret to file for deployment in another cluster
 kubesecret my-app-secrets -e -o production-secret.yaml
+```
 
-# View a secret in a specific namespace (using kubectl context)
+#### Interactive Mode
+```bash
+# Browse all secrets interactively
+kubesecret
+
+# Interactive browse and export selected secret
+kubesecret --export
+
+# View secrets in a specific namespace (using kubectl context)
 kubectl config set-context --current --namespace=my-namespace
-kubesecret my-app-secrets
+kubesecret  # Now shows secrets from my-namespace
 ```
 
 ### Export Features
@@ -93,3 +121,20 @@ kubesecret my-app-secrets
 
 - Python ≥ 3.6
 - kubectl configured with cluster access
+
+## Interactive Mode
+
+The interactive mode provides a modern terminal UI powered by [Textual](https://github.com/Textualize/textual) that makes browsing secrets intuitive and efficient:
+
+- **Professional Interface**: Clean, responsive terminal UI with header, footer, and focused navigation
+- **Smooth Navigation**: Flicker-free scrolling through long lists of secrets
+- **Keyboard Shortcuts**: Standard arrow key navigation with Enter to select
+- **Visual Feedback**: Clear highlighting of selected items
+- **Namespace Aware**: Automatically shows secrets from your current kubectl context/namespace
+- **Fallback Support**: Gracefully falls back to numbered selection if needed
+
+Perfect for:
+- 🔍 **Discovery**: When you don't know the exact secret name
+- 📋 **Browsing**: Exploring what secrets exist in a namespace  
+- ⚡ **Quick Access**: Faster than typing long secret names
+- 🎯 **Visual Selection**: See all options before choosing
