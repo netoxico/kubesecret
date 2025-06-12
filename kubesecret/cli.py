@@ -225,11 +225,16 @@ def cli(secret_name, export, output):
             secret_data = get_secret_full(secret_name)
             if secret_data:
                 yaml_output = create_exportable_yaml(secret_data, secret_name)
-                output.write(yaml_output)
-                if output.name != "<stdout>":
-                    console.print(
-                        f"✅ Secret '{secret_name}' exported to {output.name}"
-                    )
+                
+                # If no output file specified, create one using secret name
+                if output.name == "<stdout>":
+                    filename = f"{secret_name}.yaml"
+                    with open(filename, "w") as f:
+                        f.write(yaml_output)
+                    console.print(f"✅ Secret '{secret_name}' exported to {filename}")
+                else:
+                    output.write(yaml_output)
+                    console.print(f"✅ Secret '{secret_name}' exported to {output.name}")
         else:
             secrets = get_secret_data(secret_name)
             if secrets:

@@ -61,10 +61,10 @@ uv tool install -e .
 # View secret data in a formatted table
 kubesecret <secret-name>
 
-# Export secret as YAML manifest
+# Export secret as YAML manifest (creates <secret-name>.yaml file)
 kubesecret <secret-name> --export
 
-# Export to file
+# Export to specific file
 kubesecret <secret-name> --export --output secret.yaml
 ```
 
@@ -73,7 +73,7 @@ kubesecret <secret-name> --export --output secret.yaml
 # Launch interactive secret browser (no secret name required)
 kubesecret
 
-# Interactive mode with export option
+# Interactive mode with export option (creates <selected-secret>.yaml file)
 kubesecret --export
 ```
 
@@ -90,7 +90,7 @@ When you run `kubesecret` without a secret name, it enters **interactive mode** 
 # View a secret named 'my-app-secrets'
 kubesecret my-app-secrets
 
-# Export secret as YAML to stdout
+# Export secret as YAML file (creates my-app-secrets.yaml)
 kubesecret my-app-secrets --export
 
 # Export secret to file for deployment in another cluster
@@ -102,7 +102,7 @@ kubesecret my-app-secrets -e -o production-secret.yaml
 # Browse all secrets interactively
 kubesecret
 
-# Interactive browse and export selected secret
+# Interactive browse and export selected secret (creates <selected-secret>.yaml)
 kubesecret --export
 
 # View secrets in a specific namespace (using kubectl context)
@@ -115,6 +115,7 @@ kubesecret  # Now shows secrets from my-namespace
 - **Sanitized output**: Removes cluster-specific metadata (resourceVersion, uid, etc.)
 - **Portable YAML**: Ready to apply in different clusters
 - **Base64 preserved**: Maintains original secret encoding
+- **Auto-file creation**: Creates `<secret-name>.yaml` files automatically when using `--export`
 - **Flexible output**: Export to file or stdout
 
 ## Requirements
